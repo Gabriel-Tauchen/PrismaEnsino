@@ -14,14 +14,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Poder {
-  idPoder Int @id @default(autoincrement())
-  nome String @unique
-  descricao String
-}
 model Artefato{
   nome String @id
   objeto String
   material String
   destruido Boolean
+  nomeSer String
+  ser Ser @relation(fields: [nomeSer], references: [nome])
+}
+model Ser{
+  nome String @id
+  sexo String
+  morto Boolean
+  artefatos Artefato[]
+}
+model Poder {
+  idPoder Int @id @default(autoincrement())
+  nome String @unique
+  descricao String
 }
