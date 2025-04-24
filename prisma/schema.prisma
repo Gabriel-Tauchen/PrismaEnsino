@@ -15,8 +15,8 @@ datasource db {
 }
 
 model Poder {
-  idPoder Int @id
-  nome String
+  idPoder Int @id @default(autoincrement())
+  nome String @unique
   descricao String
 }
 model Artefato{
