@@ -23,12 +23,37 @@ model Artefato{
   ser Ser @relation(fields: [nomeSer], references: [nome])
   artefatos ArtefatoPoder[]
 }
+enum TipoSer {
+  SER
+  MORTAL
+  DIVINDADE
+}
+
 model Ser{
   nome String @id
   sexo String
   morto Boolean
   artefatos Artefato[]
+  tipo TipoSer
+  divindade Divindade? @relation("serDivindade")
+  mortal Mortal? @relation("serMortal")
+
 }
+model Divindade {
+  nomeSer String @id
+  ser Ser @relation("serDivindade", fields:[nomeSer], references: [nome])
+  fraqueza String
+  designacao String
+  restituirVita Boolean
+}
+model Mortal {
+  nomeSer String @id
+  ser Ser @relation("serMortal", fields:[nomeSer], references: [nome])
+  nascimento DateTime
+  raca String
+  profissao String
+}
+
 model Poder {
   idPoder Int @id @default(autoincrement())
   nome String @unique
