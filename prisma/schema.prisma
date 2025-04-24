@@ -21,6 +21,7 @@ model Artefato{
   destruido Boolean
   nomeSer String
   ser Ser @relation(fields: [nomeSer], references: [nome])
+  artefatos ArtefatoPoder[]
 }
 model Ser{
   nome String @id
@@ -32,4 +33,13 @@ model Poder {
   idPoder Int @id @default(autoincrement())
   nome String @unique
   descricao String
+  artefatos ArtefatoPoder[]
+}
+model ArtefatoPoder{
+  artefatoNome String
+  artefato Artefato @relation(fields: [artefatoNome], references: [nome])
+  poderId Int
+  poder Poder @relation(fields: [poderId], references: [idPoder])
+  @@id([artefatoNome, poderId]) // PK composta
+  @@map("ArtefatoPoder") // nome da tabela no ban
 }
